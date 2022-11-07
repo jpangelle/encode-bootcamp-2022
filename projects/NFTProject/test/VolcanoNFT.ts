@@ -21,7 +21,16 @@ describe("VolcanoNFT", function () {
       deployVolcanoNFTFixture
     );
 
-    expect(await volcanoNFT.mint(addresses[0].address, 0));
+    const tokenId = 1;
+
+    expect(
+      await volcanoNFT.mintNFT(
+        addresses[0].address,
+        tokenId,
+        `https://dummyjson.com/products/${tokenId}`,
+        { value: ethers.utils.parseEther("0.01") }
+      )
+    );
   });
 
   it("should transfer NFT", async function () {
@@ -29,14 +38,23 @@ describe("VolcanoNFT", function () {
       deployVolcanoNFTFixture
     );
 
-    expect(await volcanoNFT.mint(addresses[0].address, 0));
+    const tokenId = 1;
+
+    expect(
+      await volcanoNFT.mintNFT(
+        addresses[0].address,
+        tokenId,
+        `https://dummyjson.com/products/${tokenId}`,
+        { value: ethers.utils.parseEther("0.01") }
+      )
+    );
     expect(
       await volcanoNFT
         .connect(addresses[0])
         ["safeTransferFrom(address,address,uint256)"](
           addresses[0].address,
           addresses[1].address,
-          0
+          tokenId
         )
     );
   });
