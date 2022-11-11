@@ -1,8 +1,12 @@
 import { ethers } from "hardhat";
 
 async function main() {
+  const gwei = ethers.utils.parseEther("0.000000001");
+
   const ReentrancyAttack = await ethers.getContractFactory("ReentrancyAttack");
-  const reentrancyAttack = await ReentrancyAttack.deploy();
+  const reentrancyAttack = await ReentrancyAttack.deploy({
+    value: gwei,
+  });
 
   await reentrancyAttack.deployed();
 

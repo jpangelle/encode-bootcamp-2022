@@ -16,7 +16,7 @@ const config: HardhatUserConfig = {
       accounts: [process.env.ENCODE_PRIVATE_KEY],
     },
   },
-  solidity: "0.6.10",
+  solidity: "0.8.10",
   etherscan: {
     apiKey: process.env.ENCODE_ETHERSCAN_API_KEY,
   },
