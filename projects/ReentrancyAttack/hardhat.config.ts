@@ -2,15 +2,18 @@ import { HardhatUserConfig } from "hardhat/config";
 import "@nomiclabs/hardhat-etherscan";
 import "@nomicfoundation/hardhat-toolbox";
 import dotenv from "dotenv";
+import "@nomiclabs/hardhat-ethers";
 
 dotenv.config();
 
-console.log(process.env.ENCODE_INFURA_ENDPOINT_GOERLI);
-
 const config: HardhatUserConfig = {
-  defaultNetwork: "goerli",
+  defaultNetwork: "hardhat",
   networks: {
-    hardhat: {},
+    hardhat: {
+      forking: {
+        url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
+      },
+    },
     goerli: {
       url: process.env.ENCODE_INFURA_ENDPOINT_GOERLI,
       accounts: [process.env.ENCODE_PRIVATE_KEY],
